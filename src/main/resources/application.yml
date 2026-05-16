@@ -15,5 +15,8 @@ mybatis-plus:
       logic-not-delete-value: 0
 
 stackside:
+  jwt:
+    secret: stackside-blog-secret-key-change-me-please-32bytes
+    expiration-ms: 86400000
   article:
     view-count-sync-delay: 60000
