@@ -15,39 +15,45 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "首页文章列表项")
+@Schema(description = "Article list item")
 public class ArticleListItemVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "文章ID")
+    @Schema(description = "Article id")
     private Long id;
 
-    @Schema(description = "文章标题")
+    @Schema(description = "Article title")
     private String title;
 
-    @Schema(description = "文章摘要")
+    @Schema(description = "Article summary")
     private String summary;
 
-    @Schema(description = "封面图URL")
+    @Schema(description = "Cover image URL")
     private String coverImg;
 
-    @Schema(description = "分类ID")
+    @Schema(description = "Category id")
     private Long categoryId;
 
-    @Schema(description = "分类名称")
+    @Schema(description = "Category name")
     private String categoryName;
 
-    @Schema(description = "标签列表")
+    @Schema(description = "Tags")
     private List<TagVO> tags;
 
-    @Schema(description = "阅读量，包含 Redis 中尚未落库的增量")
+    @Schema(description = "View count")
     private Integer viewCount;
 
-    @Schema(description = "是否置顶，0 否 1 是")
+    @Schema(description = "Pinned flag")
     private Integer isTop;
 
-    @Schema(description = "发布时间")
+    @Schema(description = "Article status, 0 draft, 1 published")
+    private Integer status;
+
+    @Schema(description = "Create time")
     private LocalDateTime createTime;
+
+    @Schema(description = "Update time")
+    private LocalDateTime updateTime;
 }

@@ -8,7 +8,7 @@ import com.stackside.blog.model.vo.ArticleListItemVO;
 
 public interface ArticleService extends IService<BlogArticle> {
 
-    IPage<ArticleListItemVO> getHomeArticlePage(long pageNo, long pageSize);
+    IPage<ArticleListItemVO> getHomeArticlePage(long pageNo, long pageSize, String keyword, Long categoryId);
 
     ArticleDetailVO getArticleDetail(Long articleId);
 }

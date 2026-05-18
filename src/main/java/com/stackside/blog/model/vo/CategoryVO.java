@@ -14,17 +14,20 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "Tag view object")
-public class TagVO implements Serializable {
+@Schema(description = "Category view object")
+public class CategoryVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Tag id")
+    @Schema(description = "Category id")
     private Long id;
 
-    @Schema(description = "Tag name")
+    @Schema(description = "Category name")
     private String name;
+
+    @Schema(description = "Sort weight")
+    private Integer sort;
 
     @Schema(description = "Related article count")
     private Long articleCount;

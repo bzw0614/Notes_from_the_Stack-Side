@@ -30,8 +30,10 @@ public class ArticleFrontController {
     @GetMapping
     public Result<IPage<ArticleListItemVO>> pageHomeArticles(
             @RequestParam(defaultValue = "1") @Min(1) long pageNo,
-            @RequestParam(defaultValue = "10") @Min(1) @Max(50) long pageSize) {
-        return Result.success(articleService.getHomeArticlePage(pageNo, pageSize));
+            @RequestParam(defaultValue = "10") @Min(1) @Max(50) long pageSize,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Long categoryId) {
+        return Result.success(articleService.getHomeArticlePage(pageNo, pageSize, keyword, categoryId));
     }
 
     @Operation(summary = "获取文章详情")

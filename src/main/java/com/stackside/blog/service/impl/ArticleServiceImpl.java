@@ -27,6 +27,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 import java.util.AbstractMap;
@@ -66,11 +67,17 @@ public class ArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogArtic
 
     @Override
     @Transactional(readOnly = true)
-    public IPage<ArticleListItemVO> getHomeArticlePage(long pageNo, long pageSize) {
+    public IPage<ArticleListItemVO> getHomeArticlePage(long pageNo, long pageSize, String keyword, Long categoryId) {
+        final String finalKeyword = StringUtils.hasText(keyword) ? keyword.trim() : null;
         Page<BlogArticle> articlePage = baseMapper.selectPage(
                 new Page<>(pageNo, pageSize),
                 Wrappers.lambdaQuery(BlogArticle.class)
                         .eq(BlogArticle::getStatus, ARTICLE_STATUS_PUBLISHED)
+                        .eq(categoryId != null, BlogArticle::getCategoryId, categoryId)
+                        .and(finalKeyword != null, wrapper -> wrapper
+                                .like(BlogArticle::getTitle, finalKeyword)
+                                .or()
+                                .like(BlogArticle::getSummary, finalKeyword))
                         .orderByDesc(BlogArticle::getIsTop)
                         .orderByDesc(BlogArticle::getCreateTime)
         );
@@ -126,7 +133,9 @@ public class ArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogArtic
                 .tags(articleTagMap.getOrDefault(article.getId(), Collections.emptyList()))
                 .viewCount(mergeViewCount(article.getViewCount(), viewDeltaMap.get(article.getId())))
                 .isTop(article.getIsTop())
+                .status(article.getStatus())
                 .createTime(article.getCreateTime())
+                .updateTime(article.getUpdateTime())
                 .build();
     }
 
